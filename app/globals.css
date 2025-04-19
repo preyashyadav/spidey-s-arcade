@@ -1,26 +1,870 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --pink: #f03485;
+  --yellow: #ffce55;
+  --blue: #51cbf1;
+  --orange: #fa9939;
+  --green: #9dc705;
+  --dkblue: #038ecf;
+  --grey: #484848;
+  --ltgrey: #acacac;
+  --dkgrey: #222222;
+  --red: #f3655d;
+
+  --comic-font: "Patrick Hand SC", cursive;
+  --headline-font: "Bangers", cursive;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--comic-font);
+  background: #fdf9ec; /* aged paper */
+  color: var(--dkgrey);
+  line-height: 1.4;
+}
+
+.whole-container {
+  width: 100%;
+  margin: 0 auto;
+}
+.inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.clear {
+  clear: both;
+}
+.half {
+  width: 50%;
+}
+.third {
+  width: 33.333%;
+}
+.two-thirds {
+  width: 66.666%;
+}
+.quarter {
+  width: 25%;
+}
+
+#topnav {
+  background: var(--dkgrey);
+  padding: 0.5rem 1rem;
+}
+#topnav .logo img {
+  height: 40px;
+}
+#topnav .nav ul {
+  list-style: none;
+}
+#topnav .nav li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+#topnav .nav li a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: var(--comic-font);
+}
+#topnav .nav li:hover a {
+  color: var(--blue);
+}
+#topnav .nav .action .btn {
+  background: #fff;
+  color: var(--dkgrey);
+  border: 2px solid var(--dkgrey);
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+}
+#topnav .nav .action .btn:hover {
+  background: var(--yellow);
+}
+
+.panel {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-top: 3px solid var(--dkgrey);
+  background-size: 8px 8px;
+}
+
+/* Dot‑halftone overlay */
+.panel {
+  background-image: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px
+    ),
+    radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-position: 0 0, 4px 4px;
+  margin: -1rem;
+}
+
+/* Color variants */
+.panel.red {
+  background-image: url("#"), url("#"), url("#"), url("#"), url("#"),
+    linear-gradient(
+      40deg,
+      #bd2d10 0,
+      #f4502f 30%,
+      #ff6e51 50%,
+      #f4502f 70%,
+      #bd2d10 100%
+    );
+}
+.panel.blue {
+  background-image: /* same pattern with blue stops */ ;
+  margin-top: 1rem;
+  border: none;
+}
+.panel.grey {
+  background-image: var(--dkgrey) /* grey stops */;
+}
+.panel.ltgrey {
+  background-image: var(--grey) /* ltgrey stops */;
+}
+.panel.yellow {
+  background-image: var(--yellow) /* yellow stops */;
+}
+.panel.orange {
+  background-image: var(--orange) /* orange stops */;
+}
+.panel.pink {
+  background-image: var(--pink) /* pink stops */;
+}
+.panel.green {
+  background-image: var(--green) /* green stops */;
+}
+
+.comic-pane {
+  position: relative;
+  margin: 1% auto;
+  overflow: hidden;
+  background: white;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+}
+.comic-pane .text {
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  width: 60%;
+  transform: skew(-15deg);
+  background: white;
+  padding: 1rem;
+  border-right: 3px solid var(--dkgrey);
+}
+.comic-pane .text .holder {
+  transform: skew(15deg);
+}
+.comic-pane .comic-image {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  width: 40%;
+  transform: skew(-15deg);
+  overflow: hidden;
+}
+.comic-pane .comic-image .cimg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  transform: skew(15deg);
+}
+
+.comics-dialog {
+  position: relative;
+  background: #fff;
+  padding: 2rem;
+  display: inline-block;
+  margin: 2rem;
+  filter: drop-shadow(0 4px 0 var(--red));
+  transition: top 0.2s;
+  cursor: pointer;
+}
+
+.comics-thought {
+  position: relative;
+  display: block;
+  background: #fff;
+  border: 4px solid var(--black);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 4px 4px 0 var(--black);
+  font-family: "Happy Monkey", cursive;
+  max-width: 500px;
+  margin: 0 auto 1rem; /* center & space below */
+  transition: top 0.2s;
+  cursor: default;
+  box-shadow: 20px 20px var(--yellow);
+}
+
+/* description text styling */
+.comics-thought p {
+  margin: 0 0 0.75rem;
+  line-height: 1.3em;
+  font-size: 1em;
+}
+
+.comics-thought h4 {
+  margin: 0;
+  font-family: "Bangers", sans-serif;
+  font-size: 1.75rem;
+  color: var(--yellow);
+  text-shadow: -1px -1px var(--black), 1px 1px var(--black),
+    2px 2px var(--black);
+  transform: skew(-5deg) rotate(-2deg);
+  display: inline-block;
+}
+.comics-dialog-answer:hover {
+  box-shadow: 20px 20px var(--red);
+}
+
+.big {
+  font-family: var(--headline-font);
+  display: block;
+  text-shadow: -1px -1px var(--yellow), 1px 1px var(--orange),
+    2px 2px var(--orange);
+  /* transform: rotate(-10deg) skew(-10deg); */
+  margin-bottom: 1rem;
+}
+h1.big {
+  font-size: 6rem;
+}
+h2.big {
+  font-size: 4rem;
+}
+h3.big {
+  font-size: 3rem;
+}
+h4.big {
+  font-size: 2rem;
+}
+
+footer {
+  background: var(--dkgrey);
+  color: #fff;
+  padding: 2rem 0;
+  clear: both;
+}
+footer .company {
+  background: var(--blue);
+  color: var(--yellow);
+  padding: 1rem;
+}
+footer h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+footer ul li {
+  margin-bottom: 0.5rem;
+}
+footer .bottom {
+  background: #333;
+  color: var(--ltgrey);
+  padding: 1rem;
+}
+
+/* Maze grid container */
+.maze-grid {
+  display: grid;
+  gap: 4px;
+  justify-content: center;
+  /* auto‑calculate columns from markup */
+  grid-auto-flow: dense;
+}
+
+/* Maze cells */
+.maze-cell {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  background: #fff;
+}
+
+/* States */
+.maze-cell.void-cell {
+  background: #ccc;
+}
+.maze-cell.mine-cell {
+  background: #f88;
+}
+.maze-cell.path-cell {
+  background: #ff8;
+}
+.maze-cell.exit-cell {
+  border-color: #0a0;
+}
+
+/* Utility to override the number of columns */
+.maze-grid {
+  grid-template-columns: repeat(7, 48px);
+}
+
+.panel {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-top: 3px solid var(--dkgrey);
+  background-size: 8px 8px;
+  background-image: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px
+    ),
+    radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-position: 0 0, 4px 4px;
+}
+
+/* Speech bubble styling */
+.speech-bubble {
+  position: relative;
+  clip-path: polygon(
+    5% 0%,
+    95% 0%,
+    100% 5%,
+    100% 90%,
+    85% 100%,
+    50% 85%,
+    15% 100%,
+    0% 90%,
+    0% 5%
+  );
+  border: 4px solid #000;
+  background: #fff;
+}
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 25%;
+  border: 20px solid transparent;
+  border-top-color: #fff;
+  filter: drop-shadow(2px 2px 0 #000);
+}
+
+/* Narration bubble styling */
+.narration-bubble {
+  position: relative;
+  clip-path: polygon(
+    10% 0%,
+    90% 0%,
+    100% 10%,
+    100% 90%,
+    90% 100%,
+    10% 100%,
+    0% 90%,
+    0% 10%
+  );
+  border: 4px solid #000;
+  background: #fff;
+}
+.narration-bubble::after {
+  content: "";
+  position: absolute;
+  top: -16px;
+  right: 20%;
+  border: 16px solid transparent;
+  border-bottom-color: #fff;
+  filter: drop-shadow(2px 2px 0 #000);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.answers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .comics-thought,
+  .comics-dialog {
+    width: 90% !important;
+    margin: 0 auto;
+  }
+}
+
+/* globals.css */
+@font-face {
+  font-family: "BadaboomBB";
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/badaboombb.woff2")
+      format("woff2"),
+    url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/badaboombb.woff")
+      format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.riddle-container {
+  position: relative;
+}
+
+.feedback-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.feedback-overlay svg {
+  width: 50%;
+  height: auto;
+}
+
+.comics-button {
+  /* skewed comic look */
+  display: inline-block;
+  transform: skew(-5deg);
+  font-family: var(--headline-font);
+  font-size: 1.25rem;
+  padding: 0.75rem 1.5rem;
+  color: var(--dkgrey);
+  background: #fff;
+  border: 3px solid var(--dkgrey);
+  box-shadow: 4px 6px 0 var(--dkgrey);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.comics-button > span {
+  display: block;
+  transform: skew(5deg);
+}
+
+.comics-button:hover {
+  transform: skew(-5deg) translateY(-4px);
+  box-shadow: 6px 8px 0 var(--dkgrey);
+}
+
+/* pressed looks stamped down */
+.comics-button:active {
+  transform: skew(-5deg) translateY(2px);
+  box-shadow: 2px 3px 0 var(--dkgrey);
+}
+
+.comics-hint {
+  display: inline-block;
+  transform: skew(-5deg);
+  background: var(--yellow);
+  border: 3px solid var(--dkgrey);
+  box-shadow: 4px 6px 0 var(--dkgrey);
+  padding: 0.5rem 1rem;
+  font-family: var(--headline-font);
+  font-size: 1rem;
+  color: var(--dkgrey);
+  cursor: default;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+/* counter‑skew inner text for crisp readability */
+.comics-hint > span {
+  display: block;
+  transform: skew(5deg);
+}
+
+/* subtle “pop” on hover */
+.comics-hint:hover {
+  transform: skew(-5deg) translateY(-3px);
+  box-shadow: 6px 8px 0 var(--dkgrey);
+}
+
+.comic-button {
+  position: absolute;
+  padding: 0.75rem 1rem;
+  background: var(--green);
+  color: var(--dkgrey);
+  font-family: var(--comic-font);
+  font-size: 1rem;
+  clip-path: polygon(
+    5% 0%,
+    95% 0%,
+    100% 10%,
+    100% 90%,
+    85% 100%,
+    50% 85%,
+    15% 100%,
+    0% 90%,
+    0% 10%
+  );
+  border: 4px solid var(--dkgrey);
+  filter: drop-shadow(3px 3px 0 var(--dkgrey));
+  white-space: nowrap;
+  z-index: 20;
+}
+
+/* little “tail” on each bubble */
+.comic-button::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-top-color: var(--yellow);
+  filter: drop-shadow(2px 2px 0 var(--dkgrey));
+}
+
+/* positioning helpers */
+.live-hint {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+.hint-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.full-screen {
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -2rem;
+}
+
+.panel.compact {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Combined Leaderboards layout */
+.leaderboard-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Each board takes about half width, up to 505px */
+.leaderboard {
+  flex: 1 1 48%;
+  max-width: 505px;
+}
+
+/* Center the headings */
+.leaderboard h3 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+/* On narrow screens stack them */
+@media (max-width: 600px) {
+  .leaderboard {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+}
+
+.sign-in {
+  width: 300px;
+}
+
+.begin-button {
+  display: flex;
+  justify-content: end;
+}
+
+.comics-dialog-li {
+  width: 100%;
+}
+
+/* Navbar base */
+.navbar {
+  padding: 0.5rem 1rem;
+}
+
+/* Layout inside navbar */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Logo button tweaks */
+.logo-btn {
+  font-family: var(--headline-font);
+  font-size: 1.25rem;
+}
+
+/* Auth area */
+.auth-area {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* User avatar */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+/* User name bubble smaller */
+.user-name {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* Panel color variant for navbar */
+.panel.dkgrey {
+  background: var(--dkgrey);
+  border-top-color: var(--dkgrey);
+}
+
+.comics-user {
+  color: var(--orange);
+  font-size: 1.5rem;
+}
+
+.comics-button,
+.comics-button:link,
+.comics-button:visited {
+  text-decoration: none;
+}
+
+/* indicate selected shape */
+.comics-dialog.selected {
+  box-shadow: 0 0 0 4px var(--yellow);
+}
+
+/* grey out placed shapes */
+.comics-dialog.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* small label under each target slot */
+.target-name {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: var(--grey);
+}
+
+.maze-container {
+  position: relative;
+}
+
+.maze-grid {
+  display: grid;
+  gap: 4px;
+  justify-content: center;
+}
+
+.maze-cell {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--dkgrey);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.maze-cell:hover {
+  transform: scale(1.05);
+}
+
+/* Void cell resets you back to start */
+.void-cell {
+  background: #ccc;
+}
+
+/* Your trail through the maze */
+.path-cell {
+  background: #ff8;
+}
+
+/* Exit cell shows the finish flag */
+.exit-cell {
+  background: #cfc;
+  border-color: #0a0;
+}
+
+.feedback-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.feedback-overlay svg {
+  width: 50%;
+  height: auto;
+}
+
+.comics-hint {
+  display: inline-block;
+  transform: skew(-5deg);
+  background: var(--yellow);
+  border: 3px solid var(--dkgrey);
+  box-shadow: 4px 6px 0 var(--dkgrey);
+  padding: 0.5rem 1rem;
+  font-family: var(--headline-font);
+  font-size: 1rem;
+  color: var(--dkgrey);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  margin-bottom: 1rem;
+}
+.comics-hint:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.comics-hint > span {
+  transform: skew(5deg);
+}
+.comics-hint:hover:not(:disabled) {
+  transform: skew(-5deg) translateY(-3px);
+  box-shadow: 6px 8px 0 var(--dkgrey);
+}
+
+.mine-cell {
+  background: #f88;
+}
+
+.maze-container {
+  position: relative;
+}
+.maze-grid {
+  display: grid;
+  gap: 4px;
+  justify-content: center;
+}
+.maze-cell {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--dkgrey);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.maze-cell:hover {
+  transform: scale(1.05);
+}
+.void-cell {
+  background: #ccc;
+}
+.path-cell {
+  background: #ff8;
+}
+.exit-cell {
+  background: #cfc;
+  border-color: #0a0;
+}
+
+.feedback-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.feedback-overlay svg {
+  width: 50%;
+  height: auto;
+}
+
+.begin-container {
+  width: 80%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.comics-input {
+  display: inline-block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 3px solid var(--dkgrey);
+  border-radius: 4px;
+  background: var(--yellow);
+  color: var(--dkgrey);
+  font-family: var(--headline-font);
+  font-size: 1rem;
+  cursor: default;
+  transform: skew(-5deg);
+  box-shadow: 4px 6px 0 var(--dkgrey);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.comic-footer {
+  background: #000000;
+  border-top: 4px solid #333;
+  padding: 1rem;
+  text-align: center;
+  font-family: "Comic Sans MS", comic, sans-serif;
+  box-shadow: inset 0 4px 0 #333;
+  margin-top: auto;
+}
+
+.comic-footer .inner {
+  transform: skew(2deg);
+}
+
+.comic-footer p {
+  margin: 0.25rem 0;
+  color: var(--yellow);
+  font-size: 0.9rem;
+}
+
+.footer-link {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: bold;
 }
