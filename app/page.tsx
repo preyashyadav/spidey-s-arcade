@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { signInWithPopup, onAuthStateChanged, User } from "firebase/auth";
 import {
   collection,
@@ -51,9 +52,14 @@ export default function HomePage() {
       const snap = await getDocs(q);
       setTopPlayers(
         snap.docs.map((d) => {
-          const data = d.data() as any;
+          const data = d.data() as {
+            displayName?: string;
+            uid?: string;
+            score?: number;
+            photoURL?: string;
+          };
           return {
-            displayName: data.displayName || data.uid || "Unknown",
+            displayName: data.displayName?.trim() || data.uid || "Unknown",
             score: data.score ?? 0,
             photoURL: data.photoURL,
           };
@@ -64,13 +70,21 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!user) return setMyPerformances([]);
+    if (!user) {
+      setMyPerformances([]);
+      return;
+    }
+    const uid = user.uid;
+
     async function loadMine() {
-      const q = query(collection(db, "games"), where("uid", "==", user.uid));
+      const q = query(collection(db, "games"), where("uid", "==", uid));
       const snap = await getDocs(q);
       const best = snap.docs
         .map((d) => {
-          const data = d.data() as any;
+          const data = d.data() as {
+            aura?: string;
+            score?: number;
+          };
           return {
             aura: data.aura || "Unknown Aura",
             score: data.score ?? 0,
@@ -93,7 +107,8 @@ export default function HomePage() {
     setError(null);
     try {
       await signInWithPopup(auth, googleProvider);
-    } catch (e: any) {
+    } catch (err) {
+      const e = err as Error;
       setError(e.message || "Sign‑in failed");
     } finally {
       setLoading(false);
@@ -122,7 +137,8 @@ export default function HomePage() {
       console.log("🔍 Final stages:", customStages);
       sessionStorage.setItem("dynamicStages", JSON.stringify(customStages));
       router.push("/game");
-    } catch (e: any) {
+    } catch (err) {
+      const e = err as Error;
       console.error(e);
       setError("Failed to craft quest");
     } finally {
@@ -134,18 +150,16 @@ export default function HomePage() {
     return (
       <section className="panel blue full-screen">
         <div className="inner stack" style={{ textAlign: "center" }}>
-          <h1 className="big">Spidey's Arcade</h1>
-          <p>Welcome to Spidey's Arcade, let's play!</p>
-          <div className="sign-in-btn-container">
-            <button
-              className="comics-button sign-in"
-              onClick={handleGoogleSignIn}
-              disabled={loading}
-            >
-              {loading ? "Signing in…" : "Sign in with Google"}
-            </button>
-            {error && <div className="comics-dialog">{error}</div>}
-          </div>
+          <h1 className="big">Spidey&apos;s Arcade</h1>
+          <p>Welcome to Spidey&apos;s Arcade, let&apos;s play!</p>
+          <button
+            className="comics-button sign-in"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+          >
+            {loading ? "Signing in…" : "Sign in with Google"}
+          </button>
+          {error && <div className="comics-dialog">{error}</div>}
         </div>
       </section>
     );
@@ -158,30 +172,26 @@ export default function HomePage() {
           <div className="comics-dialog">
             <p>
               Welcome back, {user.displayName || user.email}!<br />
-              Type your favorite show name/ movie name or anime below to
-              generate a quest.:
+              Type your favorite show, movie, or anime to generate a quest:
             </p>
-            <br />
-            <input
-              type="text"
-              className="comics-input"
-              placeholder="Type here... e.g. Naruto, Marvel, One Piece…"
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
-              disabled={generating}
-              autoFocus
-            />
           </div>
-          <div className="begin-container">
-            <button
-              className="comics-button begin-btn"
-              onClick={startQuest}
-              disabled={!theme || generating}
-            >
-              {generating ? "Crafting Quest…" : "Begin Your Quest"}
-            </button>
-            {error && <div className="comics-dialog">{error}</div>}
-          </div>
+          <input
+            type="text"
+            className="comics-input"
+            placeholder="e.g. Naruto, Marvel, One Piece…"
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+            disabled={generating}
+            autoFocus
+          />
+          <button
+            className="comics-button begin-btn"
+            onClick={startQuest}
+            disabled={!theme || generating}
+          >
+            {generating ? "Crafting Quest…" : "Begin Your Quest"}
+          </button>
+          {error && <div className="comics-dialog">{error}</div>}
         </div>
       </section>
 
@@ -190,7 +200,7 @@ export default function HomePage() {
       <section>
         <div className="inner leaderboard-container">
           <div className="leaderboard">
-            <h3>🐦‍🔥 Top Players</h3>
+            <h3>🏅 Top Players</h3>
             <ol style={{ listStyle: "none", padding: 0 }}>
               {topPlayers.map((p, i) => (
                 <li
@@ -199,12 +209,13 @@ export default function HomePage() {
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   {p.photoURL && (
-                    <img
+                    <Image
                       src={p.photoURL}
                       alt={p.displayName}
                       width={32}
                       height={32}
-                      style={{ borderRadius: "50%", marginRight: 8 }}
+                      className="rounded-full"
+                      style={{ marginRight: 8 }}
                     />
                   )}
                   <span>{p.displayName}</span>

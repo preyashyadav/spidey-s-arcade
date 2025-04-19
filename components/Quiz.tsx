@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { RiddleStage } from "../lib/gameData";
 
 type MCQ = {
   type: "mcq";

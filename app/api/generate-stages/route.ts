@@ -87,7 +87,7 @@ an array of exactly 3 objects, in this exact order:
     if (!Array.isArray(stages) || stages.length !== 3) {
       throw new Error("Expected an array of 3 stages");
     }
-  } catch (e) {
+  } catch {
     console.error("Invalid JSON from OpenAI:", raw);
     throw new Error("AI returned invalid JSON for stages.");
   }

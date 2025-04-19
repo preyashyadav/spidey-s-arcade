@@ -22,7 +22,6 @@ export default function Navbar() {
     return onAuthStateChanged(auth, setUser);
   }, []);
 
-
   useEffect(() => {
     const onStart = () => setTimerActive(true);
     window.addEventListener("game:start", onStart);
@@ -53,9 +52,9 @@ export default function Navbar() {
   return (
     <nav className="navbar panel dkgrey">
       <div className="inner nav-inner">
-        {/* <Link href="/" onClick={handleHomeClick}>
+        <Link href="/" onClick={handleHomeClick}>
           <div className="comics-button logo-btn">PY</div>
-        </Link> */}
+        </Link>
 
         {timerActive && (
           <div className="comics-hint">

@@ -18,9 +18,7 @@ export default function ShapeMatcher({
   const [selected, setSelected] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
 
-
   const [shuffledTargets, setShuffledTargets] = useState<string[]>([]);
-
 
   useEffect(() => {
     const arr = [...targets];
@@ -30,7 +28,6 @@ export default function ShapeMatcher({
     }
     setShuffledTargets(arr);
   }, [targets]);
-
 
   useEffect(() => {
     if (
@@ -47,7 +44,6 @@ export default function ShapeMatcher({
 
   const handleMatch = (target: string) => {
     if (!selected || feedback) return;
-
 
     const shapeIdx = shapes.indexOf(selected);
     const targetIdx = targets.indexOf(target);
@@ -72,7 +68,6 @@ export default function ShapeMatcher({
             <p>{description}</p>
           </div>
 
-
           <div className="answers-grid">
             {shapes.map((s) => {
               const isPlaced = !!placed[s];
@@ -91,7 +86,6 @@ export default function ShapeMatcher({
             })}
           </div>
 
-
           <div className="answers-grid">
             {shuffledTargets.map((t) => {
               const filled = placed[t];
@@ -109,7 +103,6 @@ export default function ShapeMatcher({
           </div>
         </div>
       </section>
-
 
       {feedback && (
         <div className="feedback-overlay">
