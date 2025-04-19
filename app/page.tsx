@@ -152,14 +152,16 @@ export default function HomePage() {
         <div className="inner stack" style={{ textAlign: "center" }}>
           <h1 className="big">Spidey&apos;s Arcade</h1>
           <p>Welcome to Spidey&apos;s Arcade, let&apos;s play!</p>
-          <button
-            className="comics-button sign-in"
-            onClick={handleGoogleSignIn}
-            disabled={loading}
-          >
-            {loading ? "Signing in…" : "Sign in with Google"}
-          </button>
-          {error && <div className="comics-dialog">{error}</div>}
+          <div className="sign-in-btn-container">
+            <button
+              className="comics-button sign-in"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+            >
+              {loading ? "Signing in…" : "Sign in with Google"}
+            </button>
+            {error && <div className="comics-dialog">{error}</div>}
+          </div>
         </div>
       </section>
     );
@@ -174,24 +176,28 @@ export default function HomePage() {
               Welcome back, {user.displayName || user.email}!<br />
               Type your favorite show, movie, or anime to generate a quest:
             </p>
+            <br />
+            <input
+              type="text"
+              className="comics-input"
+              placeholder="e.g. Naruto, Marvel, One Piece…"
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
+              disabled={generating}
+              autoFocus
+            />
           </div>
-          <input
-            type="text"
-            className="comics-input"
-            placeholder="e.g. Naruto, Marvel, One Piece…"
-            value={theme}
-            onChange={(e) => setTheme(e.target.value)}
-            disabled={generating}
-            autoFocus
-          />
-          <button
-            className="comics-button begin-btn"
-            onClick={startQuest}
-            disabled={!theme || generating}
-          >
-            {generating ? "Crafting Quest…" : "Begin Your Quest"}
-          </button>
-          {error && <div className="comics-dialog">{error}</div>}
+
+          <div className="begin-container">
+            <button
+              className="comics-button begin-btn"
+              onClick={startQuest}
+              disabled={!theme || generating}
+            >
+              {generating ? "Crafting Quest…" : "Begin Your Quest"}
+            </button>
+            {error && <div className="comics-dialog">{error}</div>}
+          </div>
         </div>
       </section>
 
@@ -200,7 +206,7 @@ export default function HomePage() {
       <section>
         <div className="inner leaderboard-container">
           <div className="leaderboard">
-            <h3>🏅 Top Players</h3>
+            <h3>🐦‍🔥 Top Players</h3>
             <ol style={{ listStyle: "none", padding: 0 }}>
               {topPlayers.map((p, i) => (
                 <li
