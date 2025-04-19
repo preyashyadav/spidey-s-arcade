@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Sign In Screen
+![image](https://github.com/user-attachments/assets/812d388f-d3dd-4b9a-bae1-38e87aaf793c)
+## Home Page
+![image](https://github.com/user-attachments/assets/75ef32b8-0205-4842-b9e6-206773b2ae97)
+## Riddles
+![image](https://github.com/user-attachments/assets/856dc58f-bced-428a-9a53-36f4147f8991)
+## Matching Puzzle
+![image](https://github.com/user-attachments/assets/f5819b65-54d3-434b-aabd-bd1501248a5a)
+## Maze Solving
+![image](https://github.com/user-attachments/assets/b755f8a9-2571-48ed-91d5-a6a6a466ab74)
 
-## Getting Started
+## Correct Move
+![image](https://github.com/user-attachments/assets/cc054624-d6fa-4a41-a6bf-41574cfb09d0)
 
-First, run the development server:
+## Wrong Move
+![image](https://github.com/user-attachments/assets/dd1df47f-6768-4ae6-8fea-8c7b57221fbb)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Victory
+![image](https://github.com/user-attachments/assets/6176ab22-e2ed-4e29-b405-510457b77c17)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Game Over
+![image](https://github.com/user-attachments/assets/b296e1b3-5c1d-4865-9014-a0c7e67090fd)
